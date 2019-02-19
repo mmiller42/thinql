@@ -2,16 +2,20 @@
   "name": "thinql-parse",
   "version": "0.0.0",
   "description": "Parse ThinQL queries",
-  "main": "./lib/index.js",
-  "author": "Matt Miller <me@mmiller.me>",
+  "keywords": ["thinql", "parser", "query", "search", "filter"],
   "license": "MIT",
+  "homepage": "https://github.com/mmiller42/thinql",
+  "bugs": "https://github.com/mmiller42/thinql/issues",
+  "repository": "github:mmiller42/thinql",
+  "author": "Matt Miller <me@mmiller.me>",
+  "main": "./lib/index.js",
+  "bin": {
+    "thinql": "./lib/cli.js"
+  },
   "scripts": {
     "build": "nearleyc lib/grammar.ne -o lib/grammar.js",
     "cli": "./lib/cli.js",
     "watch": "npm-watch"
-  },
-  "bin": {
-    "thinql": "./lib/cli.js"
   },
   "watch": {
     "build": "lib/grammar.ne"
@@ -24,5 +28,8 @@
   },
   "devDependencies": {
     "npm-watch": "^0.6.0"
+  },
+  "engines": {
+    "node": ">= 10"
   }
 }

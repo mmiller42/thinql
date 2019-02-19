@@ -3,6 +3,8 @@ See [parser readme](packages/parse/README.md).
 Todos:
 
 * [ ] Write formal spec
+* [ ] CI
+* [ ] Linting
 * **parse**: Parse ThinQL queries
   * [ ] Unit tests
 * **model**: Define data types, properties, functions, and flags
