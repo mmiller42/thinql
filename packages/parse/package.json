@@ -1,8 +1,14 @@
 {
   "name": "thinql-parse",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Parse ThinQL queries",
-  "keywords": ["thinql", "parser", "query", "search", "filter"],
+  "keywords": [
+    "thinql",
+    "parser",
+    "query",
+    "search",
+    "filter"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/mmiller42/thinql",
   "bugs": "https://github.com/mmiller42/thinql/issues",
