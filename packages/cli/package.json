@@ -1,6 +1,6 @@
 {
   "name": "@thinql/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Parse ThinQL queries to stdout as ThinQL or JSON AST",
   "keywords": [
     "bin",
@@ -32,7 +32,7 @@
     "build": "src/**.js"
   },
   "dependencies": {
-    "@thinql/parse": "^0.1.0",
+    "@thinql/parse": "^0.2.0",
     "source-map-support": "^0.5.12"
   },
   "devDependencies": {
@@ -40,5 +40,8 @@
   },
   "engines": {
     "node": ">= 10"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

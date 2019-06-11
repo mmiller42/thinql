@@ -1,6 +1,6 @@
 {
   "name": "@thinql/to-knex",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Build SQL queries from ThinQL ASTs with Knex.js",
   "keywords": [
     "filter",
@@ -38,10 +38,13 @@
     "knex": "^0.17.0"
   },
   "devDependencies": {
-    "@thinql/parse": "^0.1.0",
+    "@thinql/parse": "^0.2.0",
     "knex": "^0.17.0"
   },
   "engines": {
     "node": ">= 10"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
