@@ -1,29 +1,31 @@
-import './_typedefs.js'
-import _Node from './_Node.js'
-import Call from './Call.js'
-import Property from './Property.js'
-import Value from './Value.js'
+import _Node, { attributeSetsMap, registerType } from './_Node.js'
 
 export default class Comparison extends _Node {
-  static get type() {
+  static get name() {
     return 'Comparison'
   }
 
-  /**
-   * @param {{
-   *   comparisonOperator: '!=' | '*=' | '>=' | '<=' | '>' | '<' | '=',
-   *   left: Call | Property,
-   *   right: Call | Value,
-   * }} attributes
-   * @param {_Node | _Token} token
-   */
-  constructor(attributes, token) {
-    super(attributes, token)
+  constructor({ comparisonOperator, left, right }, token) {
+    super({ comparisonOperator, left, right }, token)
+  }
+
+  get comparisonOperator() {
+    return attributeSetsMap.get(this).comparisonOperator
+  }
+
+  get left() {
+    return attributeSetsMap.get(this).left
+  }
+
+  get right() {
+    return attributeSetsMap.get(this).right
   }
 
   toString() {
-    const { comparisonOperator, left, right } = this.attributes
+    const { comparisonOperator, left, right } = this
 
     return `${left} ${comparisonOperator} ${right}`
   }
 }
+
+registerType(Comparison)

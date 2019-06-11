@@ -1,26 +1,27 @@
-import './_typedefs.js'
-import _Node from './_Node.js'
-import Value from './Value.js'
+import _Node, { attributeSetsMap, registerType } from './_Node.js'
 
 export default class Call extends _Node {
-  static get type() {
+  static get name() {
     return 'Call'
   }
 
-  /**
-   * @param {{
-   *   arguments: Array<Call | Value>,
-   *   callee: string,
-   * }} attributes
-   * @param {_Node | _Token} token
-   */
-  constructor(attributes, token) {
-    super(attributes, token)
+  constructor({ arguments: args, callee }, token) {
+    super({ arguments: args, callee }, token)
+  }
+
+  get arguments() {
+    return attributeSetsMap.get(this).arguments
+  }
+
+  get callee() {
+    return attributeSetsMap.get(this).callee
   }
 
   toString() {
-    const { callee, arguments: args } = this.attributes
+    const { arguments: args, callee } = this
 
     return `${callee}(${args.join(' ')})`
   }
 }
+
+registerType(Call)

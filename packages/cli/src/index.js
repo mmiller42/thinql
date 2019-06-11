@@ -2,13 +2,14 @@
 
 import 'source-map-support/register'
 import { createInterface } from 'readline'
+import { inspect } from 'util'
 import parse from '@thinql/parse'
 
 const run = async () => {
   const [, , ...args] = process.argv
 
   const formatArg = args.find(arg => arg.startsWith('--'))
-  const format = formatArg ? formatArg.substr(2) : 'query'
+  const format = formatArg ? formatArg.substr(2) : null
 
   let input = args.find(arg => !arg.startsWith('--'))
 
@@ -42,11 +43,18 @@ const run = async () => {
 
   switch (format) {
     case 'json':
-      console.log(JSON.stringify(tree, null, 2))
+      console.log(JSON.stringify(tree.toJSON(), null, 2))
       break
     case 'query':
-    default:
       console.log(tree.toString())
+      break
+    case 'inspect':
+    default:
+      console.log(inspect(tree, {
+        compact: false,
+        colors: true,
+        depth: null,
+      }))
       break
   }
 }

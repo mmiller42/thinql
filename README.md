@@ -38,4 +38,4 @@ For details, see the [full specification](Specification.md).
 |**@thinql/monarch-language**|Provide highlighting and IntelliSense ThinQL query editing with Monaco based on models|
 |[**@thinql/parse**](packages/parse/)|Parse ThinQL queries to ASTs|
 |**@thinql/sandbox**|Generate and examine ASTs, write and test models, try the Monaco editor, etc. in a GitHub Pages environment|
-|**@thinql/to-knex**|Build SQL queries from ThinQL ASTs with Knex.js|
+|[**@thinql/to-knex**](packages/to-knex/)|Build SQL queries from ThinQL ASTs with Knex.js|

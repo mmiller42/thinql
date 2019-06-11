@@ -1,6 +1,6 @@
 # @thinql/parse
 
-Parse ThinQL queries to ASTs.
+Parse ThinQL queries to ASTs
 
 ## Installation
 

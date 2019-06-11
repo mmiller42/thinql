@@ -1,23 +1,21 @@
-import './_typedefs.js'
-import _Node from './_Node.js'
-import Value from './Value.js'
+import _Node, { attributeSetsMap, registerType } from './_Node.js'
 
 export default class FullTextSearch extends _Node {
-  static get type() {
+  static get name() {
     return 'FullTextSearch'
   }
 
-  /**
-   * @param {{
-   *   value: Value
-   * }} attributes
-   * @param {_Node | _Token} token
-   */
-  constructor(attributes, token) {
-    super(attributes, token)
+  constructor({ value }, token) {
+    super({ value }, token)
+  }
+
+  get value() {
+    return attributeSetsMap.get(this).value
   }
 
   toString() {
-    return `${this.attributes.value}`
+    return `${this.value}`
   }
 }
+
+registerType(FullTextSearch)

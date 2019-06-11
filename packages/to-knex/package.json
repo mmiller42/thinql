@@ -1,13 +1,20 @@
 {
-  "name": "@thinql/parse",
+  "name": "@thinql/to-knex",
   "version": "0.1.0",
-  "description": "Parse ThinQL queries to ASTs",
+  "description": "Build SQL queries from ThinQL ASTs with Knex.js",
   "keywords": [
     "filter",
+    "knex",
+    "knex.js",
+    "mysql",
     "parser",
+    "pg",
+    "postgres",
+    "postgresql",
     "query",
     "reduce",
     "search",
+    "sql",
     "thinql"
   ],
   "license": "MIT",
@@ -19,22 +26,20 @@
   "module": "dist/esm/index.js",
   "scripts": {
     "build": "yarn clean && mkdir dist && yarn build:esm && yarn build:cjs",
-    "build:cjs": "CJS=true babel dist/esm --source-maps --root-mode upward --out-dir dist/cjs",
-    "build:esm": "babel src/lib --source-maps --root-mode upward --out-dir dist/esm && node scripts/compileGrammar.js",
+    "build:cjs": "CJS=true babel src --source-maps --root-mode upward --out-dir dist/cjs",
+    "build:esm": "babel src --source-maps --root-mode upward --out-dir dist/esm",
     "clean": "rm -rf dist",
     "watch": "npm-watch"
   },
   "watch": {
-    "build": "src/**.{js,ne}"
+    "build": "src/**.js"
   },
-  "dependencies": {
-    "jju": "^1.4.0",
-    "memoize-one": "^5.0.4",
-    "moo": "^0.5.0",
-    "nearley": "^2.16.0"
+  "peerDependencies": {
+    "knex": "^0.17.0"
   },
   "devDependencies": {
-    "npm-watch": "^0.6.0"
+    "@thinql/parse": "^0.1.0",
+    "knex": "^0.17.0"
   },
   "engines": {
     "node": ">= 10"

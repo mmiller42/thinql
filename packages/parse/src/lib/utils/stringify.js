@@ -1,5 +1,5 @@
 import jju from 'jju/index.js'
-import { unquotedString } from '../tokens/index.js'
+import unquotedString from '../tokens/unquotedString.js'
 
 const unquotedStringRegExp = new RegExp(`^${unquotedString.match.source}$`)
 

@@ -1,23 +1,22 @@
-import './_typedefs.js'
-import _Node from './_Node.js'
-import { stringify } from '../utils/index.js'
+import _Node, { attributeSetsMap, registerType } from './_Node.js'
+import stringify from '../utils/stringify.js'
 
 export default class Property extends _Node {
-  static get type() {
+  static get name() {
     return 'Property'
   }
 
-  /**
-   * @param {{
-   *   content: string
-   * }} attributes
-   * @param {_Node | _Token} token
-   */
-  constructor(attributes, token) {
-    super(attributes, token)
+  constructor({ content }, token) {
+    super({ content }, token)
+  }
+
+  get content() {
+    return attributeSetsMap.get(this).content
   }
 
   toString() {
-    return stringify(this.attributes.content)
+    return stringify(this.content)
   }
 }
+
+registerType(Property)

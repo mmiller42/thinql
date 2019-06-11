@@ -21,6 +21,41 @@ thinql 'hello world'
 ```
 hello world
 ---
+Statement [1:1] {
+  expression: LogicalAndExpression [1:1] {
+    assertions: [
+      Assertion [1:1] {
+        assertion: FullTextSearch [1:1] {
+          value: Value [1:1] {
+            content: 'hello',
+            literal: false
+          }
+        },
+        negated: false
+      },
+      Assertion [1:7] {
+        assertion: FullTextSearch [1:7] {
+          value: Value [1:7] {
+            content: 'world',
+            literal: false
+          }
+        },
+        negated: false
+      }
+    ]
+  }
+}
+```
+
+***
+
+```sh
+thinql 'hello world' --query
+```
+
+```
+hello world
+---
 hello world
 ```
 
@@ -31,6 +66,8 @@ $ thinql 'hello world' --json
 ```
 
 ```
+hello world
+---
 hello world
 ---
 {

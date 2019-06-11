@@ -33,7 +33,12 @@
     comparisonOperators: ['=', '!=', '>', '>=', '<', '<='],
     pattern: /^-?\d*\.?\d*$/,
     // default: transform: value => value.content
-    transform: value => parseInt(value.content, 10)
+    transform: value => parseInt(value.content, 10),
+  })
+
+  const dateString = new Type({
+    comparisonOperators: ['=', '!=', '>', '>=', '<', '<='],
+    pattern: /^\d{4}-\d{2}-\d{2}$/,
   })
 
   const permissionSlug = new Type({
@@ -48,7 +53,7 @@
       if (permission) {
         return value.content
       } else {
-      throw new Error('The permission slug is invalid')
+        throw new Error('The permission slug is invalid')
       }
     },
   })
@@ -75,19 +80,19 @@
   })
 
   const propertyArgument = requiredArgument.extend({
-    transform: value => {
+    transform: property => {
       // Schema#properties can be used to recursively find property names even on relationships
-      if (!get(user.properties, value.content)) {
+      if (!get(user.properties, property.content)) {
         throw new Error('property is invalid')
       } else {
-        return value.content
+        return property.content
       }
     },
   })
 
   const user = new Schema({
     id: { title: 'User ID', desc: 'The User ID', type: id },
-    firstName: { title: 'First name', desc: 'The user\'s first name', type: string },
+    firstName: { title: 'First name', desc: "The user's first name", type: string },
     owner: () => ({ label: 'Owner', type: user }), // for self-references, use CB style like node graphql
     pet: () => ({ label: 'Pet', type: pet }),
   })
@@ -97,17 +102,43 @@
     owner: { label: 'Owner', type: user },
   })
 
-  const length = new Func({
+  const length = new OperandFunction({
     arguments: [
       { name: 'property', desc: 'The property whose string length is being computed', type: propertyArgument }
     ],
+    desc: 'Get the length of the value of the given property',
     returnType: number,
   })
+
+  const isActive = new StandaloneFunction({
+    desc: 'Users who are active',
+    // knex.QueryBuilder indicates it can be called directly in the query
+    // Otherwise it may be a Type if it returns a string, or another value here.
+    // it will just be a primitive or an instanceof check, so:
+    // null, undefined, Number, String, RegExp, Date, Object, etc.
+    returnType: StandaloneFunction.QueryBuilder,
+  })
+
+  const now = new StandaloneFunction({
+    desc: 'Get the current date/time instance',
+    returnType: Date,
+  })
+
+  const getDate = new StandaloneFunction({
+    arguments: [
+      { name: 'date', desc: 'The date object', type: Date },
+    ],
+    desc: 'Get a date string (YYYY-MM-DD) from the date/time instance',
+    returnType: dateString,
+  }
 
   export default new Model({
     fullTextSearch: false /* disable */ | true /* no restrictions, default */ | Type,
     functions: {
+      getDate,
+      isActive,
       length,
+      now,
     },
     schema: user,
   })
@@ -145,7 +176,7 @@
   * [ ] Add IntelliSense property and function suggestions when tied to a model
   * [ ] Support nested properties for related resources
 * **to-knex**: Transform a ThinQL AST to a Knex.js query
-  * [ ] Create transformer
+  * [x] Create transformer
   * [ ] Unit tests
 * **sandbox**: Generate and examine ASTs, write and test models, try the Monaco editor, etc. in a GitHub Pages environment.
   * [ ] Basic input textarea -> AST output

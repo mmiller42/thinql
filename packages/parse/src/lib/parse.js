@@ -1,11 +1,12 @@
 import nearley from 'nearley'
-import grammar from './grammar.js'
+import compiledGrammar from './grammar.js'
 
 const { Grammar, Parser } = nearley
-const parser = new Parser(Grammar.fromCompiled(grammar))
+const grammar = Grammar.fromCompiled(compiledGrammar)
 
 const parse = input => {
-  const output = parser.feed(input)
+  const output = new Parser(grammar).feed(input)
+
   return output.results[0]
 }
 

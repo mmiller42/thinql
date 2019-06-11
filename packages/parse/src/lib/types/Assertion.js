@@ -1,30 +1,28 @@
-import './_typedefs.js'
-import _LogicalExpression from './_LogicalExpression.js'
-import _Node from './_Node.js'
-import Call from './Call.js'
-import Comparison from './Comparison.js'
-import FullTextSearch from './FullTextSearch.js'
+import _Node, { attributeSetsMap, registerType } from './_Node.js'
 
 export default class Assertion extends _Node {
-  static get type() {
+  static get name() {
     return 'Assertion'
   }
 
-  /**
-   * @param {{
-   *   assertion: _LogicalExpression | Call | Comparison | FullTextSearch,
-   *   negated: boolean,
-   * }} attributes
-   * @param {_Node | _Token} token
-   */
-  constructor(attributes, token) {
-    super(attributes, token)
+  constructor({ assertion, negated = false }, token) {
+    super({ assertion, negated }, token)
+  }
+
+  get assertion() {
+    return attributeSetsMap.get(this).assertion
+  }
+
+  get negated() {
+    return attributeSetsMap.get(this).negated
   }
 
   toString() {
-    const { assertion, negated } = this.attributes
+    const { assertion, negated } = this
     const negator = negated ? '!' : ''
 
     return `${negator}${assertion}`
   }
 }
+
+registerType(Assertion)

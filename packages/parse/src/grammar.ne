@@ -1,16 +1,14 @@
 @{%
-  import {
-    Assertion,
-    Call,
-    Comparison,
-    FullTextSearch,
-    LogicalAndExpression,
-    LogicalOrExpression,
-    Property,
-    Statement,
-    Value,
-  } from './types/index.js'
+  import Assertion from './types/Assertion.js'
+  import Call from './types/Call.js'
+  import Comparison from './types/Comparison.js'
+  import FullTextSearch from './types/FullTextSearch.js'
   import lexer from './lexer.js'
+  import LogicalAndExpression from './types/LogicalAndExpression.js'
+  import LogicalOrExpression from './types/LogicalOrExpression.js'
+  import Property from './types/Property.js'
+  import Statement from './types/Statement.js'
+  import Value from './types/Value.js'
 %}
 
 @lexer lexer
@@ -107,7 +105,7 @@ comparisonOperator -> %comparisonOperator {%
 
 ## An exclamation point that negates the following assertion
 negator -> %negator {%
-  () => true
+  ([negator]) => negator
 %}
 
 ## An optionally quoted string literal
@@ -131,17 +129,18 @@ _LogicalExpression -> (LogicalAndExpression | LogicalOrExpression) {%
 # Nodes
 
 ## A negatable requirement that the search results must satisfy
-Assertion -> negator:? _ (Comparison | (%openBracket _LogicalExpression %closeBracket) | Call | FullTextSearch) {%
+Assertion -> negator:? _ (Comparison | (%openBracket _ _LogicalExpression _ %closeBracket) | Call | FullTextSearch) {%
   ([negator, , [assertionGroup]]) => {
     let assertion = assertionGroup
+    let openBracket
 
     if (Array.isArray(assertion)) {
-      ([, assertion] = assertionGroup)
+      ([openBracket, , assertion] = assertionGroup)
     }
 
     return new Assertion(
       { assertion, negated: negator !== null },
-      negator || assertion
+      negator || openBracket || assertion
     )
   }
 %}
@@ -223,6 +222,7 @@ Value -> string {%
   ([content]) => {
     const { type, value } = content
     const literal = type === 'quotedString'
+
     return new Value({ content: value, literal }, content)
   }
 %}
