@@ -35,11 +35,11 @@
     "build": "src/**.js"
   },
   "peerDependencies": {
-    "knex": "^0.17.0"
+    "knex": "^2.3.0"
   },
   "devDependencies": {
     "@thinql/parse": "^0.2.0",
-    "knex": "^0.17.0"
+    "knex": "^2.3.0"
   },
   "engines": {
     "node": ">= 10"
